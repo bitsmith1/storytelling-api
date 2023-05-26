@@ -1,0 +1,104 @@
+[
+    {
+        "author": "Mark Twain",
+        "author_username": "mtwain",
+        "body": "Tom Sawyer's mischievous adventures in a small town.",
+        "date_published": "2023-05-26T08:59:40.558000",
+        "genre": "Adventure",
+        "hashtags": [
+            "adventure",
+            "mischief"
+        ],
+        "id": "647027a4dc3e0af72d13eb92",
+        "image_url": "https://example.com/tom_sawyer.jpg",
+        "likes_count": 40,
+        "prompt": "What trouble will Tom get into next?",
+        "published": true,
+        "title": "The Adventures of Tom Sawyer"
+    },
+    {
+        "author": "J.D. Salinger",
+        "author_username": "jdsalinger",
+        "body": "Holden Caulfield's journey through New York City.",
+        "date_published": "2023-05-26T09:00:40.124000",
+        "genre": "Coming-of-age",
+        "hashtags": [
+            "comingofage",
+            "youth"
+        ],
+        "id": "647027e0dc3e0af72d13eb93",
+        "image_url": "https://example.com/catcher_in_the_rye.jpg",
+        "likes_count": 20,
+        "prompt": "Who is Holden's favorite fictional character?",
+        "published": true,
+        "title": "The Catcher in the Rye"
+    },
+    {
+        "author": "Agatha Christie",
+        "author_username": "achristie",
+        "body": "Hercule Poirot investigates a murder on a luxurious train.",
+        "date_published": "2023-05-26T09:01:20.868000",
+        "genre": "Mystery",
+        "hashtags": [
+            "mystery",
+            "crime"
+        ],
+        "id": "64702808dc3e0af72d13eb94",
+        "image_url": "https://example.com/orient_express.jpg",
+        "likes_count": 35,
+        "prompt": "Can Poirot solve the mystery before reaching the destination?",
+        "published": true,
+        "title": "Murder on the Orient Express"
+    },
+    {
+        "author": "Jane Austen",
+        "author_username": "jausten",
+        "body": "Elizabeth Bennet navigates societal expectations and love.",
+        "date_published": "2023-05-26T09:01:32.100000",
+        "genre": "Romance",
+        "hashtags": [
+            "romance",
+            "regency"
+        ],
+        "id": "64702814dc3e0af72d13eb95",
+        "image_url": "https://example.com/pride_and_prejudice.jpg",
+        "likes_count": 24,
+        "prompt": "Will Elizabeth find true love in the end?",
+        "published": true,
+        "title": "Pride and Prejudice"
+    },
+    {
+        "author": "J.R.R. Tolkien",
+        "author_username": "jrtolkien",
+        "body": "Bilbo Baggins joins a quest to reclaim a lost kingdom.",
+        "date_published": "2023-05-26T09:01:44.183000",
+        "genre": "Fantasy",
+        "hashtags": [
+            "fantasy",
+            "adventure"
+        ],
+        "id": "64702820dc3e0af72d13eb96",
+        "image_url": "https://example.com/the_hobbit.jpg",
+        "likes_count": 23,
+        "prompt": "What dangers await Bilbo on his journey?",
+        "published": true,
+        "title": "The Hobbit"
+    },
+    {
+        "author": "Harper Lee",
+        "author_username": "hlee",
+        "body": "Scout Finch learns about racial injustice in her small town.",
+        "date_published": "2023-05-26T09:01:52.047000",
+        "genre": "Drama",
+        "hashtags": [
+            "drama",
+            "socialjustice"
+        ],
+        "id": "64702828dc3e0af72d13eb97",
+        "image_url": "https://example.com/to_kill_a_mockingbird.jpg",
+        "likes_count": 0,
+        "prompt": "How will the trial affect Scout and her community?",
+        "published": true,
+        "title": "To Kill a Mockingbird"
+    }
+]

@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "c4644961-9b39-467b-ada3-50e9000d9823",
+		"name": "Storytelling",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9749515"
+	},
+	"item": [
+		{
+			"name": "Get Story from ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories/6009c0eee65f6dce28fb3e50",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories",
+						"6009c0eee65f6dce28fb3e50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Stories",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create Story",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"The Brave Adventures of Max\",\n  \"body\": \"Once upon a time, in a small town, there lived a brave and loyal dog named Max. Max had a heart of gold and loved exploring the world around him. From chasing squirrels in the park to going on thrilling adventures, Max was always ready for excitement. One day, he embarked on a daring journey to rescue his best friend from a treacherous mountain. Along the way, Max encountered wild animals, solved puzzles, and overcame numerous challenges. With unwavering determination, Max finally reached the mountain peak and saved his friend. Their bond grew even stronger, and Max became a legend in the town, inspiring others with his courage and devotion.\",\n  \"author\": \"Jane Smith\",\n  \"date_published\": \"2023-05-24\",\n  \"image_url\": \"https://example.com/max.jpg\",\n  \"genre\": \"Adventure\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story from Genre",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Story",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Like Story",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Trending",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories/trending",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories",
+						"trending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete All Stories",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
