@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/stories/6009c0eee65f6dce28fb3e50",
+					"raw": "http://127.0.0.1:5000/stories/64702828dc3e0af72d13eb97",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -23,7 +23,7 @@
 					"port": "5000",
 					"path": [
 						"stories",
-						"6009c0eee65f6dce28fb3e50"
+						"64702828dc3e0af72d13eb97"
 					]
 				}
 			},
@@ -33,7 +33,21 @@
 			"name": "Get All Stories",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories"
+					]
+				}
 			},
 			"response": []
 		},
@@ -50,7 +64,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"title\": \"The Brave Adventures of Max\",\n  \"body\": \"Once upon a time, in a small town, there lived a brave and loyal dog named Max. Max had a heart of gold and loved exploring the world around him. From chasing squirrels in the park to going on thrilling adventures, Max was always ready for excitement. One day, he embarked on a daring journey to rescue his best friend from a treacherous mountain. Along the way, Max encountered wild animals, solved puzzles, and overcame numerous challenges. With unwavering determination, Max finally reached the mountain peak and saved his friend. Their bond grew even stronger, and Max became a legend in the town, inspiring others with his courage and devotion.\",\n  \"author\": \"Jane Smith\",\n  \"date_published\": \"2023-05-24\",\n  \"image_url\": \"https://example.com/max.jpg\",\n  \"genre\": \"Adventure\"\n}\n",
+					"raw": "  {\n    \"title\": \"To Kill a Mockingbird\",\n    \"body\": \"Scout Finch learns about racial injustice in her small town.\",\n    \"author\": \"Harper Lee\",\n    \"image_url\": \"https://example.com/to_kill_a_mockingbird.jpg\",\n    \"genre\": \"Drama\",\n    \"likes_count\": 0,\n    \"hashtags\": [\"drama\", \"socialjustice\"],\n    \"published\": true,\n    \"author_username\": \"hlee\",\n    \"prompt\": \"How will the trial affect Scout and her community?\"\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -78,23 +92,70 @@
 			"name": "Get Story from Genre",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories/genre/Adventure",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories",
+						"genre",
+						"Adventure"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Delete Story",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories/646e2da54f0dfab8fcc1e17e",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories",
+						"646e2da54f0dfab8fcc1e17e"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Like Story",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories/like/64702814dc3e0af72d13eb95",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories",
+						"like",
+						"64702814dc3e0af72d13eb95"
+					]
+				}
 			},
 			"response": []
 		},
@@ -124,8 +185,22 @@
 		{
 			"name": "Delete All Stories",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/stories",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"stories"
+					]
+				}
 			},
 			"response": []
 		}
