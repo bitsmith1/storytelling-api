@@ -214,5 +214,12 @@ def get_trending_stories():
 
     return jsonify(serialized_stories)
 
+@app.route('/genres', methods=['GET'])
+def get_all_genres():
+    # Retrieve all genres from the database
+    genres = mongo.db.stories.distinct('genre')
+
+    return jsonify(genres)
+
 if __name__ == '__main__':
     app.run(debug=True)
