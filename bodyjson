@@ -1,0 +1,34 @@
+{
+  "raw_prompt": "Create a vibrant landscape",
+  "additional_inputs": {
+    "style": "Impressionism",
+    "color_palette": "Warm tones",
+    "subject": "Fields and flowers",
+    "composition": "Rule of thirds",
+    "brushwork": "Textured",
+    "medium": "Oil painting",
+    "emotion": "Serene"
+  }
+}
+
+//feedback
+{
+  "generated_content_id": "6480ccc164f1e7b59a13a8bd",
+  "relevance": "high",
+  "emotions": "satisfactory",
+  "additional_comment": "Yummy!"
+}
+
+{
+  "raw_prompt": "I want a recipe",
+  "additional_inputs": {
+    "cuisine": "Indian",
+    "dietary_restrictions": "vegetarian",
+    "cooking_time": "30 minutes",
+    "skill_level": "beginner",
+    "ingredients": ["tamatar", "matar", "chole"],
+    "flavors": "garlic",
+    "occasion": "lunch",
+    "serving_size": "1"
+  }
+}

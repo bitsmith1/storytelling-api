@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"text\": \"Hello, world!\"\n}   ",
+					"raw": "{\n   \"text\":\"Hello I am barry\"\n}   ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -47,8 +47,31 @@
 		{
 			"name": "Generate Art",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"raw_prompt\": \"Create a vibrant landscape\",\n  \"additional_inputs\": {\n    \"style\": \"Impressionism\",\n    \"color_palette\": \"Warm tones\",\n    \"subject\": \"Fields and flowers\",\n    \"composition\": \"Rule of thirds\",\n    \"brushwork\": \"Textured\",\n    \"medium\": \"Oil painting\",\n    \"emotion\": \"Serene\"\n  }\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/generate_art",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"generate_art"
+					]
+				}
 			},
 			"response": []
 		},
@@ -56,31 +79,99 @@
 			"name": "Get By Content Type",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/analytics/recipe",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"analytics",
+						"recipe"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Delete By Content Type Copy",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/analytics/art",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"analytics",
+						"art"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Feedback",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"generated_content_id\": \"6480ccc164f1e7b59a13a8bd\",\n  \"relevance\": \"high\",\n  \"emotions\": \"satisfactory\",\n  \"additional_comment\": \"Yummy!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/analytics/feedback",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"analytics",
+						"feedback"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Delete All From Analytics",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/analytics",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"analytics"
+					]
+				}
 			},
 			"response": []
 		},
@@ -88,15 +179,52 @@
 			"name": "Get All Arts",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/arts",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"arts"
+					]
+				}
 			},
 			"response": []
 		},
 		{
 			"name": "Generate Recipe",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"raw_prompt\": \"I want a recipe\",\n  \"additional_inputs\": {\n    \"cuisine\": \"Indian\",\n    \"dietary_restrictions\": \"vegetarian\",\n    \"cooking_time\": \"30 minutes\",\n    \"skill_level\": \"beginner\",\n    \"ingredients\": [\"tamatar\", \"matar\", \"chole\"],\n    \"flavors\": \"garlic\",\n    \"occasion\": \"lunch\",\n    \"serving_size\": \"1\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/generate_recipe",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"generate_recipe"
+					]
+				}
 			},
 			"response": []
 		},
@@ -104,7 +232,21 @@
 			"name": "Get All Recipes",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/recipes",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"recipes"
+					]
+				}
 			},
 			"response": []
 		}
