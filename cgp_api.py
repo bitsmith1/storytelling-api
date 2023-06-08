@@ -13,6 +13,7 @@ db = get_mongodb_connection()
 analytics_collection = db['analytics']
 recipes_collection = db["recipes"]
 arts_collection = db['arts']
+stories_collection = db['stories']
 
 def save_to_analytics_db(raw_prompt, additional_inputs, engineered_prompt, generated_content_id, content_type):
 
@@ -39,8 +40,21 @@ def generate_art():
     art_id = generate_art_from_GAI(engineered_prompt)
     document_id = save_to_analytics_db(raw_prompt, additional_inputs, engineered_prompt, art_id, 'art')
     response = {
-        'document_id': str(document_id),
+        'documenqt_id': str(document_id),
         'generated_content_id': str(art_id)
+    }
+    return jsonify(response)
+
+@app.route('/generate_story', methods=['POST'])
+def generate_story():
+    raw_prompt = request.json['raw_prompt']
+    additional_inputs = request.json['additional_inputs']
+    engineered_prompt = refine_story_prompt(raw_prompt, additional_inputs)
+    story_id = generate_story_from_GAI(engineered_prompt)
+    document_id = save_to_analytics_db(raw_prompt, additional_inputs, engineered_prompt, story_id, 'story')
+    response = {
+        'document_id': str(document_id),
+        'generated_content_id': str(story_id)
     }
     return jsonify(response)
 
@@ -94,6 +108,30 @@ def refine_recipe_prompt(raw_prompt,     additional_inputs):
 
     return engineered_prompt
 
+def refine_story_prompt(raw_prompt, additional_inputs):
+    genre = additional_inputs.get('genre')
+    protagonist = additional_inputs.get('protagonist')
+    setting = additional_inputs.get('setting')
+    plot_points = additional_inputs.get('plot_points')
+    theme = additional_inputs.get('theme')
+
+    engineered_prompt = f"Write a {genre} story"
+
+    if protagonist:
+        engineered_prompt += f" with a {protagonist} as the main character"
+
+    if setting:
+        engineered_prompt += f" set in {setting}"
+
+    if plot_points:
+        engineered_prompt += f" that includes the following plot points: {', '.join(plot_points)}"
+
+    if theme:
+        engineered_prompt += f" with the theme of {theme}"
+
+    return engineered_prompt
+
+
 
 def refine_art_prompt(raw_prompt, additional_inputs):
     # Extract the additional input parameters
@@ -132,6 +170,80 @@ def generate_recipe_from_GAI(engineered_prompt):
     }
     recipe_id = recipes_collection.insert_one(recipe).inserted_id
     return recipe_id
+
+def update_story_with_image_url(story_id, image_url):
+    # Retrieve the story document from the database based on the story_id
+    story = stories_collection.find_one({'_id': story_id})
+
+    if story:
+        # Update the image_url field in the story document
+        story['image_url'] = image_url
+
+        # Save the updated story document back to the database
+        stories_collection.replace_one({'_id': story_id}, story)
+
+        return True  # Return True to indicate successful update
+
+    return False  # Return False if the story document was not found
+
+
+def generate_engineered_prompt_for_image(story_data):
+    title = story_data.get('title')
+    genre = story_data.get('genre')
+    setting = story_data.get('setting')
+    characters = story_data.get('characters')
+    key_elements = story_data.get('key_elements')
+
+    engineered_prompt = f"Generate an image for a {genre} story"
+    if title:
+        engineered_prompt += f" titled '{title}'"
+
+    if setting:
+        engineered_prompt += f" set in {setting}"
+
+    if characters:
+        engineered_prompt += f" featuring {', '.join(characters)}"
+
+    if key_elements:
+        engineered_prompt += f" with key elements: {', '.join(key_elements)}"
+
+    return engineered_prompt
+
+
+def generate_image_from_GAI(engineered_prompt):
+    # Placeholder code for generating an image using the engineered prompt
+    # Your implementation for generating the image URL based on the engineered prompt goes here
+    image_url = "https://example.com/image.jpg"
+    return image_url
+
+
+def generate_story_from_GAI(engineered_prompt):
+    story_content = "Once upon a time, in a land far away..."
+    author = "John Doe"
+    genre = "Fantasy"
+    likes_count = 0
+    hashtags = ["storytelling", "fantasy"]
+    published = True
+    author_username = "johndoe123"
+    timestamp = datetime.now()
+
+    engineered_prompt = generate_engineered_prompt_for_image()
+    image_url = generate_image_from_GAI(engineered_prompt)
+
+    # Save the generated story in the "stories" collection
+    story = {
+        'story_content': story_content,
+        'author': author,
+        'image_url': image_url,
+        'genre': genre,
+        'likes_count': likes_count,
+        'hashtags': hashtags,
+        'published': published,
+        'author_username': author_username,
+        'timestamp': timestamp
+    }
+    story_id = stories_collection.insert_one(story).inserted_id
+    return story_id, image_url
 
 
 def generate_art_from_GAI(engineered_prompt):
