@@ -369,22 +369,42 @@ import subprocess
 app = Flask(__name__)
 
 @app.route('/api/environment', methods=['GET', 'PUT'])
-def switch_environment():
+def check_environment():
     if request.method == 'GET':
         return jsonify({'environment': os.environ.get('FLASK_ENV', 'unknown')})
 
-    if request.method == 'PUT':
-        new_environment = request.json.get('environment')
+@app.route('/api/health', methods=['GET'])
+def check_health():
+    health_status = {
+        'mongodb': check_mongodb_connection(),
+        'server1': check_server_connection('ip1', 'portX'),
+        'server2': check_server_connection('ip2', 'portY'),
+        'api': 'up'
+    }
 
-        if new_environment:
-            os.environ['FLASK_ENV'] = new_environment
+    return jsonify(health_status)
 
-            # Restart the Flask app
-            args = [sys.executable] + sys.argv
-            subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            sys.exit()
+def check_mongodb_connection():
+    try:
+        client = MongoClient('mongodb://localhost:27017')
+        client.server_info()  # Try to fetch server info
+        return 'up'
+    except Exception as e:
+        return f'down ({str(e)})'
 
-        return jsonify({'error': 'Invalid request'}), 400
+def check_server_connection(ip, port):
+    try:
+        response = requests.get(f'http://{ip}:{port}')
+        if response.status_code == 200:
+            return 'up'
+        else:
+            return f'down ({response.status_code})'
+    except requests.exceptions.RequestException as e:
+        return f'down ({str(e)})'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 @app.route('/')
 def index():
