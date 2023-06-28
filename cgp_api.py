@@ -392,19 +392,20 @@ def check_mongodb_connection():
     except Exception as e:
         return f'down ({str(e)})'
 
+import socket
+
 def check_server_connection(ip, port):
     try:
-        response = requests.get(f'http://{ip}:{port}')
-        if response.status_code == 200:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)  # Set a timeout value in seconds
+        result = sock.connect_ex((ip, port))
+
+        if result == 0:
             return 'up'
         else:
-            return f'down ({response.status_code})'
-    except requests.exceptions.RequestException as e:
-        return f'down ({str(e)})'
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
+            return 'down'
+    except Exception as e:
+        return f'down ({str(e)})
 
 @app.route('/')
 def index():
