@@ -361,5 +361,35 @@ def get_all_recipes():
 
     return jsonify(recipe_list)
 
+from flask import Flask, jsonify, request
+import os
+import sys
+import subprocess
+
+app = Flask(__name__)
+
+@app.route('/api/environment', methods=['GET', 'PUT'])
+def switch_environment():
+    if request.method == 'GET':
+        return jsonify({'environment': os.environ.get('FLASK_ENV', 'unknown')})
+
+    if request.method == 'PUT':
+        new_environment = request.json.get('environment')
+
+        if new_environment:
+            os.environ['FLASK_ENV'] = new_environment
+
+            # Restart the Flask app
+            args = [sys.executable] + sys.argv
+            subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            sys.exit()
+
+        return jsonify({'error': 'Invalid request'}), 400
+
+@app.route('/')
+def index():
+    return 'Hello, World!'
+
+
 if __name__ == '__main__':
     app.run(debug=True)
