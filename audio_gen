@@ -1,0 +1,41 @@
+import requests
+
+@app.route('/generate_audio/<string:story_id>', methods=['GET'])
+def generate_audio(story_id):
+    # Find the story by its ID
+    story = mongo.db.stories.find_one({'_id': ObjectId(story_id)})
+
+    if story:
+        # Fetch the story body
+        story_body = story['body']
+        
+        # Prepare the request payload
+        payload = {'text': story_body}
+        
+        # Make a POST request to the text-to-speech API
+        response = requests.post('https://bvdsjbfhbdjhf.api/dev/tts_poc', json=payload)
+        
+        if response.status_code == 200:
+            audio_metadata = response.json()
+            audio_s3_bucket = audio_metadata.get('s3_bucket')
+            audio_s3_audio_key = audio_metadata.get('s3_audio_key')
+            audio_s3_speech_key = audio_metadata.get('s3_speech_key')
+            
+            # Update the story's audio1 parameter with the audio metadata
+            story['audiometadata'] = {
+                'audio1': {
+                    's3_bucket': audio_s3_bucket,
+                    's3_audio_key': audio_s3_audio_key,
+                    's3_speech_key': audio_s3_speech_key
+                }
+            }
+            
+            # Save the updated story
+            mongo.db.stories.update_one({'_id': story['_id']}, {'$set': story})
+            
+            # Return the audio metadata in the response
+            return jsonify({'audiometadata': story['audiometadata']})
+        else:
+            return jsonify({'message': 'Audio generation failed'}), 500
+    else:
+        return jsonify({'message': 'Story not found'}), 404
