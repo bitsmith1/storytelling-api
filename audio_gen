@@ -39,3 +39,31 @@ def generate_audio(story_id):
             return jsonify({'message': 'Audio generation failed'}), 500
     else:
         return jsonify({'message': 'Story not found'}), 404
+
+
+import requests
+from flask import jsonify
+
+@app.route('/get_narration', methods=['GET'])
+def get_narration():
+    # Prepare the request payload
+    payload = {
+        "s3_bucket": "polly-bucket",
+        "s3_key_audio": "audio/audio.mp3",
+        "s3_key_speechmarks": "speechmarks/speech.txt"
+    }
+    
+    # Make a POST request to the narration API
+    response = requests.post('https://vsbshhdhdd.com/dev/presign_s3', json=payload)
+    
+    if response.status_code == 200:
+        narration_data = response.json()
+        presigned_audio_url = narration_data.get('presigned_audio_url')
+        presigned_speechmarks = narration_data.get('presigned_speechmarks')
+        
+        return jsonify({
+            'presigned_audio_url': presigned_audio_url,
+            'presigned_speechmarks': presigned_speechmarks
+        })
+    else:
+        return jsonify({'message': 'Failed to get narration'}), 500
