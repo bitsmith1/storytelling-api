@@ -44,26 +44,41 @@ def generate_audio(story_id):
 import requests
 from flask import jsonify
 
-@app.route('/get_narration', methods=['GET'])
-def get_narration():
-    # Prepare the request payload
-    payload = {
-        "s3_bucket": "polly-bucket",
-        "s3_key_audio": "audio/audio.mp3",
-        "s3_key_speechmarks": "speechmarks/speech.txt"
-    }
-    
-    # Make a POST request to the narration API
-    response = requests.post('https://vsbshhdhdd.com/dev/presign_s3', json=payload)
-    
-    if response.status_code == 200:
-        narration_data = response.json()
-        presigned_audio_url = narration_data.get('presigned_audio_url')
-        presigned_speechmarks = narration_data.get('presigned_speechmarks')
-        
-        return jsonify({
-            'presigned_audio_url': presigned_audio_url,
-            'presigned_speechmarks': presigned_speechmarks
-        })
+@app.route('/get_narration/<string:story_id>', methods=['GET'])
+def get_narration(story_id):
+    # Find the story by its ID
+    story = mongo.db.stories.find_one({'_id': ObjectId(story_id)})
+
+    if story:
+        # Check if audiometadata exists and audio1 is present
+        if 'audiometadata' in story and 'audio1' in story['audiometadata']:
+            audio1 = story['audiometadata']['audio1']
+            s3_bucket = audio1.get('s3_bucket')
+            s3_key_audio = audio1.get('s3_audio_key')
+            s3_key_speechmarks = audio1.get('s3_speech_key')
+
+            # Prepare the request payload
+            payload = {
+                "s3_bucket": s3_bucket,
+                "s3_key_audio": s3_key_audio,
+                "s3_key_speechmarks": s3_key_speechmarks
+            }
+
+            # Make a POST request to the narration API
+            response = requests.post('https://vsbshhdhdd.com/dev/presign_s3', json=payload)
+
+            if response.status_code == 200:
+                narration_data = response.json()
+                presigned_audio_url = narration_data.get('presigned_audio_url')
+                presigned_speechmarks = narration_data.get('presigned_speechmarks')
+
+                return jsonify({
+                    'presigned_audio_url': presigned_audio_url,
+                    'presigned_speechmarks': presigned_speechmarks
+                })
+            else:
+                return jsonify({'message': 'Failed to get narration'}), 500
+        else:
+            return jsonify({'message': 'Audio1 not found in audiometadata'}), 404
     else:
-        return jsonify({'message': 'Failed to get narration'}), 500
+        return jsonify({'message': 'Story not found'}), 404
