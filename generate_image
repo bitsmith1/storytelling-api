@@ -1,0 +1,68 @@
+import requests
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route('/generate_story_image/<int:story_id>', methods=['GET'])
+def generate_story_image(story_id):
+    # Fetch the story prompt from the analytics database using the story ID
+    prompt = fetch_story_prompt(story_id)
+    
+    # Make a POST request to the image generation server
+    response = requests.post('http://image_generation_server/generate_image', json={'prompt': 'generate image ' + prompt})
+    
+    # Save the response in the story table with the story ID
+    
+    # Assuming you have a function to save the response in the story table
+    save_story_image(story_id, response.text)
+    
+    # Return the generated image URL in the API response
+    return jsonify({'image_url': response.json().get('image_url')})
+
+def fetch_story_prompt(story_id):
+    # Fetch the story prompt from the analytics database using the story ID
+    # Implement your logic here to fetch the prompt from the database
+    # Return the fetched prompt
+    return "Story prompt goes here"
+
+def save_story_image(story_id, response):
+    # Save the response in the story table with the story ID
+    # Implement your logic here to save the response in the database
+    pass
+
+def fetch_story_prompt(story_id):
+    # Connect to the MongoDB database
+    client = MongoClient('mongodb://localhost:27017')
+    
+    # Access the appropriate database and collection
+    db = client['analytics_db']
+    collection = db['stories']
+    
+    # Find the document with the given story ID
+    document = collection.find_one({'story_id': story_id})
+    
+    if document:
+        # Extract the prompt from the document
+        prompt = document['prompt']
+        
+        # Return the fetched prompt
+        return prompt
+    else:
+        # Handle the case when no prompt is found for the given story ID
+        # Return an appropriate value or raise an exception
+        raise Exception("Story prompt not found for story ID: " + str(story_id))
+
+def save_story_image(story_id, img_url):
+    # Connect to the MongoDB database
+    client = MongoClient('mongodb://localhost:27017')
+    
+    # Access the appropriate database and collection
+    db = client['analytics_db']
+    collection = db['stories']
+    
+    # Update the document with the given story ID
+    collection.update_one(
+        {'story_id': story_id},
+        {'$set': {'img_url': img_url}}
+    )
+
