@@ -1,1 +1,98 @@
+from flask import Flask, request, jsonify
+from flask_pymongo import PyMongo
 
+app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/prompts'  # MongoDB connection URI
+mongo = PyMongo(app)
+
+@app.route('/prompts', methods=['POST'])
+def create_prompt():
+    prompt_data = request.get_json()  # Get the prompt data from the request body
+
+    # Extract the required parameters from the prompt data
+    prompt = prompt_data.get('prompt')
+    sort_order = prompt_data.get('sort_order')
+    content_type = prompt_data.get('content_type')
+
+    if not sort_order:
+        # Find the last sort_order for the given content_type
+        last_prompt = mongo.db.prompts.find_one({'content_type': content_type}, sort=[('sort_order', -1)])
+        if last_prompt:
+            sort_order = last_prompt['sort_order'] + 1
+        else:
+            sort_order = 1
+
+    # Create a new prompt document in the database
+    prompt_id = mongo.db.prompts.insert_one({
+        'prompt': prompt,
+        'sort_order': sort_order,
+        'content_type': content_type
+    }).inserted_id
+
+    # Return the ID of the created prompt
+    response = {'id': str(prompt_id)}
+    return jsonify(response), 201
+
+if __name__ == '__main__':
+    app.run()
+
+from flask import Flask, request, jsonify
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
+
+app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/prompts'  # MongoDB connection URI
+mongo = PyMongo(app)
+
+@app.route('/prompts/<string:prompt_id>', methods=['GET'])
+def get_prompt(prompt_id):
+    # Find the prompt document by its ID
+    prompt = mongo.db.prompts.find_one({'_id': ObjectId(prompt_id)})
+
+    if prompt:
+        # Return the prompt data
+        response = {
+            'id': str(prompt['_id']),
+            'prompt': prompt['prompt'],
+            'sort_order': prompt['sort_order'],
+            'content_type': prompt['content_type']
+        }
+        return jsonify(response), 200
+    else:
+        # Prompt not found
+        return jsonify({'error': 'Prompt not found'}), 404
+
+if __name__ == '__main__':
+    app.run()
+from flask import Flask, request, jsonify
+from flask_pymongo import PyMongo
+
+app = Flask(__name__)
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/prompts'  # MongoDB connection URI
+mongo = PyMongo(app)
+
+@app.route('/prompts', methods=['GET'])
+def get_prompts():
+    content_type = request.args.get('content_type')  # Get the content_type parameter from the query string
+
+    if content_type:
+        # Find prompts by content_type
+        prompts = mongo.db.prompts.find({'content_type': content_type})
+    else:
+        # Find all prompts if no content_type provided
+        prompts = mongo.db.prompts.find()
+
+    serialized_prompts = []
+    for prompt in prompts:
+        serialized_prompt = {
+            'id': str(prompt['_id']),
+            'prompt': prompt['prompt'],
+            'sort_order': prompt['sort_order'],
+            'content_type': prompt['content_type']
+        }
+        serialized_prompts.append(serialized_prompt)
+
+    return jsonify(serialized_prompts), 200
+
+if __name__ == '__main__':
+    app.run()
