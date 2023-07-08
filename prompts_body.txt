@@ -1,0 +1,35 @@
+{
+  "prompt": "Write a captivating story about a daring adventure in an enchanted forest.",
+  "sort_order": 1,
+  "content_type": "story"
+}
+
+{
+  "prompt": "Uncover the secrets of a mysterious disappearance in a quaint small town.",
+  "sort_order": 2,
+  "content_type": "story"
+}
+
+{
+  "prompt": "Tell a heartfelt story about a chance encounter between two strangers in a bustling city.",
+  "sort_order": 3,
+  "content_type": "story"
+}
+
+{
+  "prompt": "Craft an epic tale of a hero's journey through a magical realm to save their kingdom.",
+  "sort_order": 4,
+  "content_type": "story"
+}
+
+{
+  "prompt": "Recount a significant historical event that shaped the course of human civilization.",
+  "sort_order": 5,
+  "content_type": "story"
+}
+
+{
+  "prompt": "Imagine an exhilarating space adventure involving intergalactic exploration and unexpected discoveries.",
+  "sort_order": 6,
+  "content_type": "story"
+}
